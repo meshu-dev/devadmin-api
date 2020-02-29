@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *   attributes={ "security" = "is_granted('ROLE_USER')" },
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\EnvironmentRepository")
  */
 class Environment
