@@ -6,7 +6,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *   attributes={"security"="is_granted('ROLE_USER')"}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\SiteRepository")
  */
 class Site
@@ -19,7 +21,7 @@ class Site
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\environment", inversedBy="sites")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Environment", inversedBy="sites")
      * @ORM\JoinColumn(nullable=false)
      */
     private $environment;
