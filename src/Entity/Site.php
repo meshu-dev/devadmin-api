@@ -3,11 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
- *   attributes={"security"="is_granted('ROLE_USER')"}
+ *   attributes={"security"="is_granted('ROLE_USER')"},
+ *   normalizationContext={"groups"={"sites:read"}},
+ *   denormalizationContext={"groups"={"sites:write"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SiteRepository")
  */
@@ -17,22 +20,26 @@ class Site
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"sites:read", "environments:item:get"})
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Environment", inversedBy="sites")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"sites:read", "sites:write", "environments:item:get"})
      */
     private $environment;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"sites:read", "sites:write", "environments:item:get"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"sites:read", "sites:write", "environments:item:get"})
      */
     private $url;
 

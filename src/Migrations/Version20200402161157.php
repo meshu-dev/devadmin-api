@@ -21,8 +21,14 @@ final class Version20200402161157 extends AbstractMigration
     {
         $this->connection->executeQuery(
             "INSERT INTO `user` (`id`, `email`, `roles`, `password`, `username`)
-             VALUES (1, 'tester@gmail.com', '[]', '$argon2id$v=19$m=65536,t=4,p=1$ZAPsjLBWW+RTQ+dLWP8+qw$F26TqwR2J9sCxm8K0xJm605oFfKr4ugPEfK4bxeAwaA', 'tester');"
-         );
+            VALUES (1, 'test@gmail.com', '[]', '$argon2id$v=19$m=65536,t=4,p=1$WkTUyfaTxERLvIkC0+7erA$+VmhqjOwfB7f5f3EDk/RMYX5FeinYL3xEnw/gmX5Qhw', 'test');"
+        );
+
+        /*
+        {
+          "email": "test@gmail.com",
+          "password": "test"
+        } */
     }
 
     public function down(Schema $schema) : void

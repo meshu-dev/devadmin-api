@@ -3,13 +3,23 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource(
- *   attributes={"security"="is_granted('ROLE_USER')"}
+ *   attributes={"security"="is_granted('ROLE_USER')"},
+ *   normalizationContext={"groups"={"environments:read"}},
+ *   denormalizationContext={"groups"={"environments:write"}},
+ *   itemOperations={
+ *      "get"={
+ *          "normalization_context"={"groups"={"environments:read", "environments:item:get"}}
+ *      },
+ *      "put",
+ *      "delete"
+ *   }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\EnvironmentRepository")
  */
@@ -19,16 +29,19 @@ class Environment
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"environments:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Groups({"environments:read", "environments:write"})
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Site", mappedBy="environment", orphanRemoval=true)
+     * @Groups({"environments:read"})
      */
     private $sites;
 
