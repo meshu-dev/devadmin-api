@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,6 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
  *   denormalizationContext={"groups"={"sites:write"}}
  * )
  * @ORM\Entity(repositoryClass="App\Repository\SiteRepository")
+ * @ApiFilter(OrderFilter::class)
+ * @ApiFilter(SearchFilter::class, properties={"environment":"exact"})
  */
 class Site
 {
