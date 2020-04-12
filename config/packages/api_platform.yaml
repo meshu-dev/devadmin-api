@@ -1,4 +1,7 @@
 api_platform:
+    collection:
+        pagination:
+            items_per_page: 10
     eager_loading:
       force_eager: false
     mapping:
