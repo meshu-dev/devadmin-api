@@ -2,6 +2,7 @@
 namespace App\Validators;
 
 use Illuminate\Support\Facades\Validator;
+use App\Exceptions\ValidationException;
 
 abstract class BaseValidator
 {
@@ -12,7 +13,10 @@ abstract class BaseValidator
         $validator = Validator::make($params, $this->rules);
  
         if ($validator->fails()) {
-            return $validator->errors();
+            throw new ValidationException(
+                $validator->errors(),
+                'Parameters didn\'t pass the validation rules for the method'
+            );
         }
         return true;
     }
