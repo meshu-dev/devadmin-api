@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Repositories\EnvironmentRepository;
 use App\Repositories\SiteRepository;
 use App\Http\Resources\SiteResource;
+use App\Validators\SiteValidator;
 
 class SiteController extends Controller
 {
@@ -12,12 +13,15 @@ class SiteController extends Controller
 
     public function __construct(
         protected EnvironmentRepository $environmentRepository,
-        protected SiteRepository $siteRepository
+        protected SiteRepository $siteRepository,
+        protected SiteValidator $siteValidator
     ) { }
 
     public function add(Request $request)
     {
         $params = $request->all();
+        $areValid = $this->siteValidator->verify($params);
+
         $row = $this->siteRepository->add($params);
 
         return $this->getResponse($row, 201);
@@ -40,6 +44,8 @@ class SiteController extends Controller
     public function edit(Request $request, string $id)
     {
         $params = $request->all();
+        $areValid = $this->siteValidator->verify($params);
+
         $row = $this->siteRepository->edit($id, $params);
 
         return $this->getResponse($row);
