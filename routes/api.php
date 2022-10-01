@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EnvironmentController;
+use App\Http\Controllers\SiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +33,21 @@ Route::group(['middleware' => 'api'], function ($router) {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
         Route::get('/user', [AuthController::class, 'userProfile']);    
+    });
+
+    Route::group(['prefix' => 'environments'], function ($router) {
+        Route::get('/', [EnvironmentController::class, 'get']);
+        Route::get('/{id}', [EnvironmentController::class, 'getAll']);
+        Route::post('/', [EnvironmentController::class, 'add']);
+        Route::put('/{id}', [EnvironmentController::class, 'edit']);
+        Route::delete('/{id}', [EnvironmentController::class, 'delete']);    
+    });
+
+    Route::group(['prefix' => 'sites'], function ($router) {
+        Route::get('/', [SiteController::class, 'get']);
+        Route::get('/{id}', [SiteController::class, 'getAll']);
+        Route::post('/', [SiteController::class, 'add']);
+        Route::put('/{id}', [SiteController::class, 'edit']);
+        Route::delete('/{id}', [SiteController::class, 'delete']);   
     });
 });
