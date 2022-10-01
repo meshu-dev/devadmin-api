@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-		factory(App\User::class)->create([
+		factory(App\Models\User::class)->create([
 		    'name' => env('USER_NAME', 'Test user'),
 		    'email' => env('USER_EMAIL', 'example@mail.com')
 		]);
