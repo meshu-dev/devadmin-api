@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\EnvironmentRepository;
 use App\Repositories\SiteRepository;
+use App\Http\Resources\SiteResource;
 
 class SiteController extends Controller
 {
+    protected $resource = SiteResource::class;
+
     public function __construct(
         protected EnvironmentRepository $environmentRepository,
         protected SiteRepository $siteRepository

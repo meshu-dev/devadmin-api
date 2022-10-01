@@ -10,4 +10,12 @@ class Site extends BaseModel
         'name',
         'url'
     ];
+
+    /**
+     * Get the site's environment
+     */
+    public function environment()
+    {
+        return $this->belongsTo(Environment::class, 'environment_id');
+    }
 }

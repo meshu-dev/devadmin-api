@@ -3,9 +3,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\EnvironmentRepository;
+use App\Http\Resources\EnvironmentResource;
 
 class EnvironmentController extends Controller
 {
+    protected $resource = EnvironmentResource::class;
+
     public function __construct(
         protected EnvironmentRepository $environmentRepository
     ) { }

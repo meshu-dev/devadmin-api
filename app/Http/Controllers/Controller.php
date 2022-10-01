@@ -16,7 +16,11 @@ class Controller extends BaseController
         int $statusCode = 200,
         array $headers = []
     ) {
-        $response = response()->json($params, $statusCode);
+        if (isset($this->resource) === true) {
+            $response = (new $this->resource($params))->response();
+        } else {
+            $response = response()->json($params, $statusCode);
+        }
 
         if (empty($headers) === false) {
             $response->withHeaders($headers);
