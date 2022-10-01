@@ -1,9 +1,7 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Site extends Model
+class Site extends BaseModel
 {
     protected $table = 'sites';
 

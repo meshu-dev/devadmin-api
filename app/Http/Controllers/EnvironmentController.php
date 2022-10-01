@@ -13,14 +13,6 @@ class EnvironmentController extends Controller
     public function add(Request $request)
     {
         $params = $request->all();
-
-        if (empty($params['environmentId']) === true) {
-            return $this->getResponse(
-                ['message' => 'Environment Id required to create site'],
-                422
-            );
-        }
-
         $row = $this->environmentRepository->add($params);
 
         return $this->getResponse($row, 201);

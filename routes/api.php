@@ -36,16 +36,16 @@ Route::group(['middleware' => 'api'], function ($router) {
     });
 
     Route::group(['prefix' => 'environments'], function ($router) {
-        Route::get('/', [EnvironmentController::class, 'get']);
-        Route::get('/{id}', [EnvironmentController::class, 'getAll']);
+        Route::get('/', [EnvironmentController::class, 'getAll']);
+        Route::get('/{id}', [EnvironmentController::class, 'get']);
         Route::post('/', [EnvironmentController::class, 'add']);
         Route::put('/{id}', [EnvironmentController::class, 'edit']);
         Route::delete('/{id}', [EnvironmentController::class, 'delete']);    
     });
 
     Route::group(['prefix' => 'sites'], function ($router) {
-        Route::get('/', [SiteController::class, 'get']);
-        Route::get('/{id}', [SiteController::class, 'getAll']);
+        Route::get('/', [SiteController::class, 'getAll']);
+        Route::get('/{id}', [SiteController::class, 'get']);
         Route::post('/', [SiteController::class, 'add']);
         Route::put('/{id}', [SiteController::class, 'edit']);
         Route::delete('/{id}', [SiteController::class, 'delete']);   

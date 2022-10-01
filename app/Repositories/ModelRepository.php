@@ -18,7 +18,7 @@ abstract class ModelRepository implements Repository
      *
      * @param Model $model Used to get and set data.
      */
-    public function __construct(Eloquent $model)
+    public function __construct(Model $model)
     {
         $this->model = $model;
     }
@@ -87,7 +87,7 @@ abstract class ModelRepository implements Repository
             $sort = current($params['order']);
             unset($params['order']);
         } else {
-            $orderField = '_id';
+            $orderField = 'id';
             $sort = 'desc';
         }
 
@@ -114,7 +114,7 @@ abstract class ModelRepository implements Repository
      */
     public function edit($id, array $params)
     {
-        $row = $this->model->where($this->model->getIdField(), '=', $id)->update($params);
+        $row = $this->model->where('id', '=', $id)->update($params);
 
         if (empty($row) === false) {
             return $row;
