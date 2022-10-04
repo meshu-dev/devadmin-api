@@ -16,7 +16,7 @@ class HomeTest extends TestCase
         $response = $this->get('/api');
 
         $response
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure(['time']);
     }
 }

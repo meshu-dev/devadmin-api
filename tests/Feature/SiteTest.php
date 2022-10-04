@@ -32,6 +32,7 @@ class SiteTest extends TestCase
     public function test_get_site_by_id_success()
     {
         $environment = $this->addEnvironment();
+
         $site = Site::create([
             'environment_id' => $environment->id,
             'name' => 'Google',
@@ -48,11 +49,13 @@ class SiteTest extends TestCase
     public function test_get_list_of_sites_success()
     {
         $environment = $this->addEnvironment();
+
         Site::create([
             'environment_id' => $environment->id,
             'name' => 'Google',
             'url' => 'http://www.google.com'
         ]);
+
         Site::create([
             'environment_id' => $environment->id,
             'name' => 'Bing',
@@ -68,56 +71,80 @@ class SiteTest extends TestCase
             ]);
     }
     
-    /*
-    public function test_add_environment_success()
+    public function test_add_site_success()
     {
         $environment = $this->addEnvironment();
+        
+        $name = 'Github';
+        $url = 'https://github.com';
+
         $params = [
-            'name' => 'Github',
-            'url' => 'https://github.com'
+            'environment_id' => $environment->id,
+            'name' => $name,
+            'url' => $url
         ];
 
         $this->json('POST', $this->url, $params)
             ->assertStatus(201)
+            ->assertJsonStructure([
+                'data' => $this->siteStructure
+            ])
             ->assertJson([
                 'data' => [
-                    'id',
-                    'environment' => [
-                        'id',
-                        'name'
-                    ],
-                    'name',
-                    'url'
+                    'name' => $name,
+                    'url' => $url
                 ]
             ]);
     }
 
-    /*
-    public function test_edit_environment_success()
+    public function test_edit_site_success()
     {
-        $environment = Environment::create(['name' => 'Test']);
+        $testEnv = Environment::create(['name' => 'Test']);
+        $localEnv = Environment::create(['name' => 'Local']);
 
-        $id = $environment->id;
+        $site = Site::create([
+            'environment_id' => $testEnv->id,
+            'name' => 'Stack Overflow',
+            'url' => 'https://stackoverflow.com'
+        ]);
+
+        $envId = $localEnv->id;
+        $name = 'Bug Crowd';
+        $url = 'https://www.bugcrowd.com';
+
         $params = [
-            'name' => 'Staging'
+            'environment_id' => $envId,
+            'name' => $name,
+            'url' => $url
         ];
 
-        $this->json('PUT', "{$this->url}/{$id}", $params)
+        $this->json('PUT', "{$this->url}/{$site->id}", $params)
             ->assertStatus(200)
+            ->assertJsonStructure([
+                'data' => $this->siteStructure
+            ])
             ->assertJson([
                 'data' => [
-                    'id' => $id,
-                    'name' => 'Staging'
+                    'environment' => [
+                        'id' => $envId
+                    ],
+                    'name' => $name,
+                    'url' => $url
                 ]
             ]);
     }
 
-    public function test_delete_environment_success()
+    public function test_delete_site_success()
     {
-        $environment = Environment::create(['name' => 'Live']);
-        $id = $environment->id;
+        $environment = $this->addEnvironment();
 
-        $this->json('DELETE', "{$this->url}/{$id}")
+        $site = Site::create([
+            'environment_id' => $environment->id,
+            'name' => 'Laravel',
+            'url' => 'https://laravel.com'
+        ]);
+
+        $this->json('DELETE', "{$this->url}/{$site->id}")
              ->assertStatus(204);
-    } */
+    } 
 }
