@@ -46,7 +46,12 @@ class SiteController extends Controller
         $params = $request->all();
         $this->siteValidator->verify($params);
 
-        $row = $this->siteRepository->edit($id, $params);
+        $isUpdated = $this->siteRepository->edit($id, $params);
+        $row = null;
+
+        if ($isUpdated == true) {
+            $row = $this->siteRepository->get($id);
+        }
 
         return $this->getResponse($row);
     }

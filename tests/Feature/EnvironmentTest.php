@@ -12,44 +12,37 @@ class EnvironmentTest extends TestCase
     use RefreshDatabase;
 
     protected $url = '/api/environments';
+    protected $envStructure = [
+        'id',
+        'name'
+    ];
 
     public function test_get_environment_by_id_success()
     {
         $environment = Environment::create(['name' => 'Production']);
 
         $this->json('GET', "{$this->url}/{$environment->id}")
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure([
-                'data' => [
-                    'id',
-                    'name'
-                ]
+                'data' => $this->envStructure
             ]);
     }
 
-    public function test_get_environments_success()
+    public function test_get_list_of_environments_success()
     {
         Environment::create(['name' => 'Production']);
         Environment::create(['name' => 'Staging']);
         Environment::create(['name' => 'Development']);
 
         $this->json('GET', $this->url)
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure([
                 'data' => [
-                    '*' => [
-                        'id',
-                        'name'
-                    ]
+                    '*' => $this->envStructure
                 ]
             ]);
     }
 
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_add_environment_success()
     {
         $params = [
@@ -58,9 +51,11 @@ class EnvironmentTest extends TestCase
 
         $this->json('POST', $this->url, $params)
             ->assertStatus(201)
+            ->assertJsonStructure([
+                'data' => $this->envStructure
+            ])
             ->assertJson([
                 'data' => [
-                    'id' => 1,
                     'name' => 'Dev'
                 ]
             ]);
@@ -76,7 +71,7 @@ class EnvironmentTest extends TestCase
         ];
 
         $this->json('PUT', "{$this->url}/{$id}", $params)
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJson([
                 'data' => [
                     'id' => $id,
@@ -91,6 +86,6 @@ class EnvironmentTest extends TestCase
         $id = $environment->id;
 
         $this->json('DELETE', "{$this->url}/{$id}")
-             ->assertStatus(204);
+             ->assertNoContent();
     }
 }
