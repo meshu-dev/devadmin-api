@@ -44,7 +44,12 @@ class EnvironmentController extends Controller
         $params = $request->all();
         $this->environmentValidator->verify($params);
 
-        $row = $this->environmentRepository->edit($id, $params);
+        $isUpdated = $this->environmentRepository->edit($id, $params);
+        $row = null;
+
+        if ($isUpdated == true) {
+            $row = $this->environmentRepository->get($id);
+        }
 
         return $this->getResponse($row);
     }
