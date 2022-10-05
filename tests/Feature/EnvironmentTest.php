@@ -70,11 +70,9 @@ class EnvironmentTest extends TestCase
         $this->testUnauthorised('GET', $this->url);
     }
 
-    public function test_get_empty_list_of_environments()
+    public function test_getting_empty_list_of_environments()
     {
         $this->setupAuth();
-
-        $this->addEnvironments();
 
         $this->json('GET', $this->url)
             ->assertOk()
@@ -148,6 +146,20 @@ class EnvironmentTest extends TestCase
 
     public function test_stop_editing_environment_with_no_token()
     {
+        $environment = $this->addEnvironment();
+
+        $id = $environment->id;
+        $params = [
+            'name' => 'Staging'
+        ];
+
+        $this->testUnauthorised('PUT', "{$this->url}/{$id}", $params);
+    }
+
+    public function test_stop_editing_environment_with_duplicate_name()
+    {
+        $this->setupAuth();
+
         $environment = $this->addEnvironment();
 
         $id = $environment->id;

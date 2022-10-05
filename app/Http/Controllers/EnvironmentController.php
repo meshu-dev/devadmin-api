@@ -25,12 +25,13 @@ class EnvironmentController extends Controller
         return $this->getResponse($row, 201);
     }
 
-    public function get(Request $request, string $id)
+    public function get(Request $request, int $id)
     {
-        $row = $this->environmentRepository->get($id);
-        $statusCode = empty($row) === false ? '200' : '404';
+        $this->environmentValidator->verifyExists($id);
 
-        return $this->getResponse($row, $statusCode);
+        $row = $this->environmentRepository->get($id);
+
+        return $this->getResponse($row);
     }
 
     public function getAll(Request $request)
@@ -41,7 +42,7 @@ class EnvironmentController extends Controller
         return $this->getResponse($rows, 200);
     }
 
-    public function edit(Request $request, string $id)
+    public function edit(Request $request, int $id)
     {
         $params = $request->all();
         $this->environmentValidator->verify($params);
@@ -56,11 +57,12 @@ class EnvironmentController extends Controller
         return $this->getResponse($row);
     }
 
-    public function delete(Request $request, string $id)
+    public function delete(Request $request, int $id)
     {
-        $result = $this->environmentRepository->delete($id);
-        $statusCode = empty($result) === false ? '204' : '404';
+        $this->environmentValidator->verifyExists($id);
 
-        return $this->getResponse([], $statusCode);
+        $this->environmentRepository->delete($id);
+
+        return $this->getResponse([], 204);
     }
 }

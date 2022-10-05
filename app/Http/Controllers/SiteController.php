@@ -27,9 +27,12 @@ class SiteController extends Controller
         return $this->getResponse($row, 201);
     }
 
-    public function get(Request $request, string $id)
+    public function get(Request $request, int $id)
     {
+        $this->siteValidator->verifyExists($id);
+
         $row = $this->siteRepository->get($id);
+
         return $this->getResponse($row);
     }
 
@@ -41,7 +44,7 @@ class SiteController extends Controller
         return $this->getResponse($rows, 200);
     }
 
-    public function edit(Request $request, string $id)
+    public function edit(Request $request, int $id)
     {
         $params = $request->all();
         $this->siteValidator->verify($params);
@@ -56,11 +59,12 @@ class SiteController extends Controller
         return $this->getResponse($row);
     }
 
-    public function delete(Request $request, string $id)
+    public function delete(Request $request, int $id)
     {
-        $result = $this->siteRepository->delete($id);
-        $statusCode = empty($result) === false ? '204' : '404';
+        $this->siteValidator->verifyExists($id);
 
-        return $this->getResponse([], $statusCode);
+        $this->siteRepository->delete($id);
+
+        return $this->getResponse([], 204);
     }
 }

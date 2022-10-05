@@ -65,6 +65,17 @@ class SiteTest extends TestCase
 
         $this->testUnauthorised('GET', $this->url);
     }
+
+    public function test_getting_empty_list_of_sites()
+    {
+        $this->setupAuth();
+
+        $this->json('GET', $this->url)
+            ->assertOk()
+            ->assertJson([
+                'data' => []
+            ]);
+    }
     
     public function test_adding_site()
     {

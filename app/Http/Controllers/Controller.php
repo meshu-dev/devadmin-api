@@ -24,7 +24,7 @@ class Controller extends BaseController
         if (isset($this->resource) === true) {
             if ($params instanceof Model) {
                 $response = (new $this->resource($params));
-            } elseif ($params instanceof Collection && $params->count() > 0) {
+            } elseif ($params instanceof Collection) {
                 $response = call_user_func($this->resource . '::collection', $params);
             }
         }
