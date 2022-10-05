@@ -24,7 +24,7 @@ class SiteTest extends TestCase
         'url'
     ];
 
-    public function test_get_site_by_id_success()
+    public function test_getting_site_by_id()
     {
         $this->setupAuth();
 
@@ -37,14 +37,14 @@ class SiteTest extends TestCase
             ]);
     }
 
-    public function test_get_site_by_id_unauthenticated()
+    public function test_stop_getting_site_by_id_with_no_token()
     {
         $site = $this->addSite();
 
         $this->testUnauthorised('GET', "{$this->url}/{$site->id}");
     }
 
-    public function test_get_list_of_sites_success()
+    public function test_getting_list_of_sites()
     {
         $this->setupAuth();
 
@@ -59,14 +59,14 @@ class SiteTest extends TestCase
             ]);
     }
 
-    public function test_get_list_of_sites_unauthenticated()
+    public function test_stop_getting_list_of_sites_with_no_token()
     {
         $this->addSites();
 
         $this->testUnauthorised('GET', $this->url);
     }
     
-    public function test_add_site_success()
+    public function test_adding_site()
     {
         $this->setupAuth();
 
@@ -94,7 +94,7 @@ class SiteTest extends TestCase
             ]);
     }
 
-    public function test_add_site_unauthenticated()
+    public function test_stop_adding_site_with_no_token()
     {
         $environment = $this->addEnvironment();
         
@@ -110,7 +110,7 @@ class SiteTest extends TestCase
         $this->testUnauthorised('POST', $this->url, $params);
     }
 
-    public function test_edit_site_success()
+    public function test_editing_site()
     {
         $this->setupAuth();
 
@@ -143,7 +143,7 @@ class SiteTest extends TestCase
             ]);
     }
 
-    public function test_edit_site_unauthenticated()
+    public function test_stop_editing_site_with_no_token()
     {
         $env = Environment::create(['name' => 'Test']);
         $site = $this->addSite();
@@ -161,7 +161,7 @@ class SiteTest extends TestCase
         $this->testUnauthorised('PUT', "{$this->url}/{$site->id}", $params);
     }
 
-    public function test_delete_site_success()
+    public function test_deleting_site()
     {
         $this->setupAuth();
 
@@ -171,7 +171,7 @@ class SiteTest extends TestCase
              ->assertStatus(204);
     }
 
-    public function test_delete_site_unauthenticated()
+    public function test_stop_deleting_site_with_no_token()
     {
         $site = $this->addSite();
         

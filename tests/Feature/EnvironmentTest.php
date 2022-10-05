@@ -18,7 +18,7 @@ class EnvironmentTest extends TestCase
         'name'
     ];
 
-    public function test_get_environment_by_id_success()
+    public function test_getting_environment_by_id()
     {
         $this->setupAuth();
 
@@ -31,27 +31,24 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
-    public function test_get_environment_by_id_unauthenticated()
+    public function test_stop_getting_environment_by_id_with_no_token()
     {
         $environment = $this->addEnvironment();
 
         $this->testUnauthorised('GET', "{$this->url}/{$environment->id}");
     }
 
-    public function test_get_environment_by_id_not_found()
+    public function test_getting_empty_environment_by_invalid_id()
     {
         $this->setupAuth();
 
         $environment = $this->addEnvironment();
 
         $this->json('GET', "{$this->url}/9999")
-            ->assertNotFound()
-            ->assertJsonStructure([
-                'data' => $this->envStructure
-            ]);
+             ->assertNotFound();
     }
 
-    public function test_get_list_of_environments_success()
+    public function test_getting_list_of_environments()
     {
         $this->setupAuth();
 
@@ -66,14 +63,27 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
-    public function test_get_list_of_environments_unauthenticated()
+    public function test_stop_getting_list_of_environments_with_no_token()
     {
         $this->addEnvironments();
 
         $this->testUnauthorised('GET', $this->url);
     }
 
-    public function test_add_environment_success()
+    public function test_get_empty_list_of_environments()
+    {
+        $this->setupAuth();
+
+        $this->addEnvironments();
+
+        $this->json('GET', $this->url)
+            ->assertOk()
+            ->assertJson([
+                'data' => []
+            ]);
+    }
+
+    public function test_adding_environment()
     {
         $this->setupAuth();
 
@@ -93,7 +103,7 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
-    public function test_add_environment_unauthenticated()
+    public function test_stop_adding_environment_with_no_token()
     {
         $params = [
             'name' => 'Dev'
@@ -102,7 +112,20 @@ class EnvironmentTest extends TestCase
         $this->testUnauthorised('POST', $this->url, $params);
     }
 
-    public function test_edit_environment_success()
+    public function test_stop_adding_environment_with_duplicate_name()
+    {
+        $this->setupAuth();
+
+        $this->addEnvironment();
+
+        $params = [
+            'name' => 'Production'
+        ];
+
+        $this->testUnauthorised('POST', $this->url, $params);
+    }
+
+    public function test_editing_environment()
     {
         $this->setupAuth();
 
@@ -123,7 +146,7 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
-    public function test_edit_environment_unauthenticated()
+    public function test_stop_editing_environment_with_no_token()
     {
         $environment = $this->addEnvironment();
 
@@ -135,7 +158,7 @@ class EnvironmentTest extends TestCase
         $this->testUnauthorised('PUT', "{$this->url}/{$id}", $params);
     }
 
-    public function test_delete_environment_success()
+    public function test_deleting_environment()
     {
         $this->setupAuth();
 
@@ -146,7 +169,7 @@ class EnvironmentTest extends TestCase
              ->assertNoContent();
     }
 
-    public function test_delete_environment_unauthenticated()
+    public function test_stop_deleting_environment_with_no_token()
     {
         $environment = $this->addEnvironment();
         $id = $environment->id;

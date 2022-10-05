@@ -28,7 +28,9 @@ class EnvironmentController extends Controller
     public function get(Request $request, string $id)
     {
         $row = $this->environmentRepository->get($id);
-        return $this->getResponse($row);
+        $statusCode = empty($row) === false ? '200' : '404';
+
+        return $this->getResponse($row, $statusCode);
     }
 
     public function getAll(Request $request)
