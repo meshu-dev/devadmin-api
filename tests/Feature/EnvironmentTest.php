@@ -42,9 +42,9 @@ class EnvironmentTest extends TestCase
     {
         $this->setupAuth();
 
-        $environment = $this->addEnvironment();
+        $id = $this->getInvalidId();
 
-        $this->json('GET', "{$this->url}/9999")
+        $this->json('GET', "{$this->url}/$id")
              ->assertStatus(422);
     }
 
@@ -189,6 +189,16 @@ class EnvironmentTest extends TestCase
         $id = $environment->id;
 
         $this->testUnauthorised('DELETE', "{$this->url}/{$id}");
+    }
+
+    public function test_stop_deleting_environment_with_invalid_id()
+    {
+        $this->setupAuth();
+
+        $id = $this->getInvalidId();
+
+        $this->json('DELETE', "{$this->url}/$id")
+             ->assertStatus(422);
     }
 
     protected function addEnvironments()

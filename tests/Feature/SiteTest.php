@@ -44,6 +44,16 @@ class SiteTest extends TestCase
         $this->testUnauthorised('GET', "{$this->url}/{$site->id}");
     }
 
+    public function test_getting_empty_site_by_invalid_id()
+    {
+        $this->setupAuth();
+
+        $id = $this->getInvalidId();
+
+        $this->json('GET', "{$this->url}/$id")
+             ->assertStatus(422);
+    }
+
     public function test_getting_list_of_sites()
     {
         $this->setupAuth();
@@ -187,6 +197,16 @@ class SiteTest extends TestCase
         $site = $this->addSite();
         
         $this->testUnauthorised('DELETE', "{$this->url}/{$site->id}");
+    }
+
+    public function test_stop_deleting_site_with_invalid_id()
+    {
+        $this->setupAuth();
+        
+        $id = $this->getInvalidId();
+
+        $this->json('DELETE', "{$this->url}/$id")
+             ->assertStatus(422);
     }
 
     protected function addSite()

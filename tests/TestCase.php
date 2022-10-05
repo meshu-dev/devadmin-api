@@ -33,4 +33,9 @@ abstract class TestCase extends BaseTestCase
     {
         return Environment::create(['name' => 'Production']);
     }
+
+    protected function getInvalidId()
+    {
+        return 9999;
+    }
 }
