@@ -12,6 +12,7 @@ class EnvironmentTest extends TestCase
     use RefreshDatabase;
 
     protected $url = '/api/environments';
+
     protected $envStructure = [
         'id',
         'name'
@@ -19,7 +20,9 @@ class EnvironmentTest extends TestCase
 
     public function test_get_environment_by_id_success()
     {
-        $environment = Environment::create(['name' => 'Production']);
+        $this->setupAuth();
+
+        $environment = $this->addEnvironment();
 
         $this->json('GET', "{$this->url}/{$environment->id}")
             ->assertOk()
@@ -28,11 +31,31 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
+    public function test_get_environment_by_id_unauthenticated()
+    {
+        $environment = $this->addEnvironment();
+
+        $this->testUnauthorised('GET', "{$this->url}/{$environment->id}");
+    }
+
+    public function test_get_environment_by_id_not_found()
+    {
+        $this->setupAuth();
+
+        $environment = $this->addEnvironment();
+
+        $this->json('GET', "{$this->url}/9999")
+            ->assertNotFound()
+            ->assertJsonStructure([
+                'data' => $this->envStructure
+            ]);
+    }
+
     public function test_get_list_of_environments_success()
     {
-        Environment::create(['name' => 'Production']);
-        Environment::create(['name' => 'Staging']);
-        Environment::create(['name' => 'Development']);
+        $this->setupAuth();
+
+        $this->addEnvironments();
 
         $this->json('GET', $this->url)
             ->assertOk()
@@ -43,8 +66,17 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
+    public function test_get_list_of_environments_unauthenticated()
+    {
+        $this->addEnvironments();
+
+        $this->testUnauthorised('GET', $this->url);
+    }
+
     public function test_add_environment_success()
     {
+        $this->setupAuth();
+
         $params = [
             'name' => 'Dev'
         ];
@@ -61,9 +93,20 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
+    public function test_add_environment_unauthenticated()
+    {
+        $params = [
+            'name' => 'Dev'
+        ];
+
+        $this->testUnauthorised('POST', $this->url, $params);
+    }
+
     public function test_edit_environment_success()
     {
-        $environment = Environment::create(['name' => 'Test']);
+        $this->setupAuth();
+
+        $environment = $this->addEnvironment();
 
         $id = $environment->id;
         $params = [
@@ -80,12 +123,47 @@ class EnvironmentTest extends TestCase
             ]);
     }
 
+    public function test_edit_environment_unauthenticated()
+    {
+        $environment = $this->addEnvironment();
+
+        $id = $environment->id;
+        $params = [
+            'name' => 'Staging'
+        ];
+
+        $this->testUnauthorised('PUT', "{$this->url}/{$id}", $params);
+    }
+
     public function test_delete_environment_success()
     {
-        $environment = Environment::create(['name' => 'Live']);
+        $this->setupAuth();
+
+        $environment = $this->addEnvironment();
         $id = $environment->id;
 
         $this->json('DELETE', "{$this->url}/{$id}")
              ->assertNoContent();
+    }
+
+    public function test_delete_environment_unauthenticated()
+    {
+        $environment = $this->addEnvironment();
+        $id = $environment->id;
+
+        $this->testUnauthorised('DELETE', "{$this->url}/{$id}");
+    }
+
+    protected function addEnvironments()
+    {
+        $environmentNames = [
+            ['name' => 'Production'],
+            ['name' => 'Staging'],
+            ['name' => 'Development']
+        ];
+
+        foreach ($environmentNames as $environmentName) {
+            Environment::create($environmentName);
+        }
     }
 }

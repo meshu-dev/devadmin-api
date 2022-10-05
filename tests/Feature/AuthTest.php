@@ -24,11 +24,6 @@ class AuthTest extends TestCase
             'password' => bcrypt($userPassword)
         ]);
 
-        /*
-        $user = User::factory()->create([
-            'name' => 'Abigail',
-        ]); */
-
         $response = $this->json('POST', route('login'), [
             'email' => $userEmail,
             'password' => $userPassword,
