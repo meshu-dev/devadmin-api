@@ -119,7 +119,7 @@ class SiteTest extends TestCase
         ];
 
         $this->json('PUT', "{$this->url}/{$site->id}", $params)
-            ->assertStatus(200)
+            ->assertOk()
             ->assertJsonStructure([
                 'data' => $this->siteStructure
             ])
