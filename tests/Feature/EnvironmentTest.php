@@ -45,7 +45,7 @@ class EnvironmentTest extends TestCase
         $environment = $this->addEnvironment();
 
         $this->json('GET', "{$this->url}/9999")
-             ->assertNotFound();
+             ->assertStatus(422);
     }
 
     public function test_getting_list_of_environments()
@@ -120,7 +120,8 @@ class EnvironmentTest extends TestCase
             'name' => 'Production'
         ];
 
-        $this->testUnauthorised('POST', $this->url, $params);
+        $this->json('POST', $this->url, $params)
+             ->assertStatus(422);
     }
 
     public function test_editing_environment()
@@ -164,10 +165,11 @@ class EnvironmentTest extends TestCase
 
         $id = $environment->id;
         $params = [
-            'name' => 'Staging'
+            'name' => 'Production'
         ];
 
-        $this->testUnauthorised('PUT', "{$this->url}/{$id}", $params);
+        $this->json('PUT', "{$this->url}/{$id}", $params)
+             ->assertStatus(422);
     }
 
     public function test_deleting_environment()

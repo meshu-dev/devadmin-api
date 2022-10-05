@@ -18,7 +18,7 @@ class EnvironmentController extends Controller
     public function add(Request $request)
     {
         $params = $request->all();
-        $this->environmentValidator->verify($params);
+        $this->environmentValidator->verifyAdd($params);
         
         $row = $this->environmentRepository->add($params);
 
@@ -45,7 +45,7 @@ class EnvironmentController extends Controller
     public function edit(Request $request, int $id)
     {
         $params = $request->all();
-        $this->environmentValidator->verify($params);
+        $this->environmentValidator->verifyEdit($id, $params);
 
         $isUpdated = $this->environmentRepository->edit($id, $params);
         $row = null;

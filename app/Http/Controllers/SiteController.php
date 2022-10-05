@@ -20,7 +20,7 @@ class SiteController extends Controller
     public function add(Request $request)
     {
         $params = $request->all();
-        $this->siteValidator->verify($params);
+        $this->siteValidator->verifyAdd($params);
 
         $row = $this->siteRepository->add($params);
 
@@ -47,7 +47,7 @@ class SiteController extends Controller
     public function edit(Request $request, int $id)
     {
         $params = $request->all();
-        $this->siteValidator->verify($params);
+        $this->siteValidator->verifyEdit($id, $params);
 
         $isUpdated = $this->siteRepository->edit($id, $params);
         $row = null;
