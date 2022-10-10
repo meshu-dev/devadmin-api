@@ -13,7 +13,7 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_login_success()
+    public function test_login()
     {
         $userEmail = time() . '@example.com';
         $userPassword = '123456789';
@@ -29,6 +29,9 @@ class AuthTest extends TestCase
             'password' => $userPassword,
         ]);
 
-        $response->assertOk();
+        $response->assertOk()
+                 ->assertJsonStructure([
+                    'token'
+                 ]);
     }
 }
