@@ -35,7 +35,11 @@ class CreateDevTables extends Migration
      */
     public function down()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
         Schema::dropIfExists('environments');
         Schema::dropIfExists('sites');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
     }
 }
