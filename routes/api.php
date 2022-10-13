@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group( function ($router) {
     Route::group(['prefix' => 'environments'], function ($router) {
         Route::get('/', [EnvironmentController::class, 'getAll']);
         Route::get('/{id}', [EnvironmentController::class, 'get']);
+        Route::get('/{id}/sites', [EnvironmentController::class, 'getSites']);
         Route::post('/', [EnvironmentController::class, 'add']);
         Route::put('/{id}', [EnvironmentController::class, 'edit']);
         Route::delete('/{id}', [EnvironmentController::class, 'delete']);    
@@ -53,4 +54,10 @@ Route::middleware('auth:sanctum')->group( function ($router) {
         Route::put('/{id}', [SiteController::class, 'edit']);
         Route::delete('/{id}', [SiteController::class, 'delete']);   
     });
+
+    /*
+    Route::get(
+        '/environments/{id}/sites',
+        [SiteController::class, 'getByEnvironment']
+    ); */
 });

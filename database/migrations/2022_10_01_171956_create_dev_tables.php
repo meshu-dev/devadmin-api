@@ -16,6 +16,7 @@ class CreateDevTables extends Migration
         Schema::create('environments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('order')->default(0);
         });
 
         Schema::create('sites', function (Blueprint $table) {

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
  
 use Illuminate\Http\Resources\Json\JsonResource;
  
-class SiteResource extends JsonResource
+class SiteEnvResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,6 +16,7 @@ class SiteResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'environment' => $this->environment,
             'name' => $this->name,
             'url' => $this->url
         ];

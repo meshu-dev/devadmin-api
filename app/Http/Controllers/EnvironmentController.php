@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\EnvironmentRepository;
 use App\Http\Resources\EnvironmentResource;
+use App\Http\Resources\SiteResource;
 use App\Validators\EnvironmentValidator;
 
 class EnvironmentController extends Controller
@@ -40,6 +41,16 @@ class EnvironmentController extends Controller
         $rows = $this->environmentRepository->getAll($params);
 
         return $this->getResponse($rows, 200);
+    }
+
+    public function getSites(Request $request, int $id)
+    {
+        $this->environmentValidator->verifyExists($id);
+
+        $row = $this->environmentRepository->get($id);
+
+        $this->resource = SiteResource::class;
+        return $this->getResponse($row->sites);
     }
 
     public function edit(Request $request, int $id)
