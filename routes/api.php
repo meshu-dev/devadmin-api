@@ -54,10 +54,4 @@ Route::middleware('auth:sanctum')->group( function ($router) {
         Route::put('/{id}', [SiteController::class, 'edit']);
         Route::delete('/{id}', [SiteController::class, 'delete']);   
     });
-
-    /*
-    Route::get(
-        '/environments/{id}/sites',
-        [SiteController::class, 'getByEnvironment']
-    ); */
 });
