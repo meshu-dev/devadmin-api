@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Services\AuthCookieService;
 use Validator;
 
 class AuthController extends Controller
@@ -21,7 +22,10 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request){
+    public function login(
+        Request $request,
+        AuthCookieService $authCookieService
+    ) {
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
@@ -30,18 +34,15 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-
-        //$credentials = $request->only('email', 'password');
-
-        //$token = auth('api')->attempt($credentials);
-
-        //return $this->createNewToken($token);
     
         $user = User::where('email', $request->email)->first();
+        $token = $user->createToken("API TOKEN")->plainTextToken;
 
-        return response()->json([
-            'token' => $user->createToken("API TOKEN")->plainTextToken
-        ], 200);
+        $cookie = $authCookieService->create($token);
+
+        return response()
+            ->json(['token' => $token], 200)
+            ->withCookie($cookie);
     }
     
     /**
