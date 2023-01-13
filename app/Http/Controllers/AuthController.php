@@ -28,21 +28,31 @@ class AuthController extends Controller
     ) {
     	$validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
+            'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
+
+        $credentials = $request->only('email', 'password');
+        $isUserValid = Auth::attempt($credentials);
+
+        if ($isUserValid === true) {
+            $user = User::where('email', $request->email)->first();
+            $token = $user->createToken("API TOKEN")->plainTextToken;
     
-        $user = User::where('email', $request->email)->first();
-        $token = $user->createToken("API TOKEN")->plainTextToken;
-
-        $cookie = $authCookieService->create($token);
-
-        return response()
-            ->json(['token' => $token], 200)
-            ->withCookie($cookie);
+            $cookie = $authCookieService->create($token);
+    
+            return response()
+                ->json(['token' => $token], 200)
+                ->withCookie($cookie);
+        } else {
+            return response()->json(
+                ['error' => 'Email and/or password were incorrect. Please try again'],
+                401
+            );
+        }
     }
     
     /**

@@ -9,7 +9,7 @@ class SiteValidator extends ApiValidator
 
     protected $rules = [
         'environment_id' => 'required|exists:App\Models\Environment,id',
-        'name' => 'required|max:100|unique:App\Models\Site,name',
+        'name' => 'required|min:3|max:100|unique:App\Models\Site,name',
         'url' => 'required|url|max:100',
     ];
 }
