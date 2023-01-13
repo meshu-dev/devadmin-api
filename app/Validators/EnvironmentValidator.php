@@ -1,6 +1,8 @@
 <?php
 namespace App\Validators;
 
+use App\Exceptions\ValidationException;
+
 class EnvironmentValidator extends ApiValidator
 {
     protected $existsRules = [
@@ -8,6 +10,28 @@ class EnvironmentValidator extends ApiValidator
     ];
 
     protected $rules = [
-        'name' => 'required|max:100|unique:App\Models\Environment,name'
+        'name' => [
+            'required',
+            'max:100'
+        ]
     ];
+
+    public function verifyAdd(array $params): ValidationException|bool
+    {
+        $this->addUniqueRule();
+
+        return parent::verifyAdd($params);
+    }
+
+    public function verifyEdit(int $id, array $params): ValidationException|bool
+    {
+        $this->addUniqueRule($id);
+
+        return parent::verifyEdit($id, $params);
+    }
+
+    protected function addUniqueRule($id = 0)
+    {
+        $this->rules['name'][] = $this->getUniqueRule('environments', $id);
+    }
 }

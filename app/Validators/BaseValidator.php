@@ -1,6 +1,7 @@
 <?php
 namespace App\Validators;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ValidationException;
 
@@ -17,5 +18,15 @@ abstract class BaseValidator
             );
         }
         return true;
+    }
+
+    protected function getUniqueRule($table, $id = 0)
+    {
+        $rule = Rule::unique($table);
+
+        if ($id > 0) {
+            $rule = $rule->ignore($id);
+        }
+        return $rule;
     }
 }
