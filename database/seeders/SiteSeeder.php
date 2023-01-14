@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Environment;
+use App\Models\Icon;
 use App\Models\Site;
 
 class SiteSeeder extends Seeder
@@ -19,5 +20,7 @@ class SiteSeeder extends Seeder
             ->count(5)
             ->has(Site::factory()->count(10), 'sites')
             ->create();
+
+        Icon::factory()->count(10)->create();
     }
 }

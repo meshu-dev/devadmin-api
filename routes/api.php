@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EnvironmentController;
+use App\Http\Controllers\IconController;
 use App\Http\Controllers\SiteController;
 
 /*
@@ -45,6 +46,11 @@ Route::middleware('auth:sanctum')->group( function ($router) {
         Route::post('/', [EnvironmentController::class, 'add']);
         Route::put('/{id}', [EnvironmentController::class, 'edit']);
         Route::delete('/{id}', [EnvironmentController::class, 'delete']);    
+    });
+
+    Route::group(['prefix' => 'icons'], function ($router) {
+        Route::get('/', [IconController::class, 'getAll']);
+        Route::get('/{id}', [IconController::class, 'get']);  
     });
 
     Route::group(['prefix' => 'sites'], function ($router) {

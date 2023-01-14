@@ -19,6 +19,11 @@ class CreateDevTables extends Migration
             $table->tinyInteger('order')->default(0);
         });
 
+        Schema::create('icons', function (Blueprint $table) {
+            $table->id();
+            $table->string('url');
+        });
+
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('environment_id');
@@ -39,6 +44,7 @@ class CreateDevTables extends Migration
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
         Schema::dropIfExists('environments');
+        Schema::dropIfExists('icons');
         Schema::dropIfExists('sites');
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
