@@ -44,15 +44,6 @@ class SiteController extends Controller
         return $this->getResponse($rows, 200);
     }
 
-    public function getByEnvironment(Request $request, int $id)
-    {
-        $this->siteValidator->verifyExists($id);
-
-        $row = $this->siteRepository->get($id);
-
-        return $this->getResponse($row);
-    }
-
     public function edit(Request $request, int $id)
     {
         $params = $request->all();

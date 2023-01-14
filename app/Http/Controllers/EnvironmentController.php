@@ -72,6 +72,16 @@ class EnvironmentController extends Controller
     {
         $this->environmentValidator->verifyExists($id);
 
+        $row = $this->environmentRepository->get($id);
+        $totalSites = $row->sites->count();
+
+        if ($totalSites > 0) {
+            return $this->getResponse(
+                ['error' => 'Cannot delete this environment as there are sites are assigned to it'],
+                422
+            );
+        }
+
         $this->environmentRepository->delete($id);
 
         return $this->getResponse([], 204);

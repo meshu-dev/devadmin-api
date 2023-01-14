@@ -12,6 +12,7 @@ class EnvironmentValidator extends ApiValidator
     protected $rules = [
         'name' => [
             'required',
+            'min:3',
             'max:100'
         ]
     ];
