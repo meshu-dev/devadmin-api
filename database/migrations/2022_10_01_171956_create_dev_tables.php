@@ -21,6 +21,7 @@ class CreateDevTables extends Migration
 
         Schema::create('icons', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
             $table->string('url');
         });
 

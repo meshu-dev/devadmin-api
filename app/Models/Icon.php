@@ -10,6 +10,7 @@ class Icon extends BaseModel
     protected $table = 'icons';
 
     protected $fillable = [
+        'name',
         'url'
     ];
 }

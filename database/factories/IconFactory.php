@@ -20,6 +20,7 @@ class IconFactory extends Factory
     public function definition()
     {
         return [
+            'name' => fake()->company(),
             'url' => fake()->imageUrl(100, 100)
         ];
     }
