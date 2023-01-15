@@ -28,10 +28,12 @@ class CreateDevTables extends Migration
         Schema::create('sites', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('environment_id');
+            $table->unsignedBigInteger('icon_id');
             $table->string('name', 100);
             $table->string('url');
 
             $table->foreign('environment_id')->references('id')->on('environments');
+            $table->foreign('icon_id')->references('id')->on('icons');
         });
     }
 

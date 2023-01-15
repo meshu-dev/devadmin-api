@@ -16,11 +16,12 @@ class SiteSeeder extends Seeder
      */
     public function run()
     {
+        $icons = Icon::factory()->count(10)->create();
+        $sites = Site::factory()->hasIcon($icons->random())->count(4);
+
         Environment::factory()
             ->count(5)
-            ->has(Site::factory()->count(10), 'sites')
+            ->has($sites, 'sites')
             ->create();
-
-        Icon::factory()->count(10)->create();
     }
 }

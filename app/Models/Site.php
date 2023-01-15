@@ -11,6 +11,7 @@ class Site extends BaseModel
 
     protected $fillable = [
         'environment_id',
+        'icon_id',
         'name',
         'url'
     ];
@@ -21,5 +22,13 @@ class Site extends BaseModel
     public function environment()
     {
         return $this->belongsTo(Environment::class, 'environment_id');
+    }
+
+    /**
+     * Get the site's icon
+     */
+    public function icon()
+    {
+        return $this->belongsTo(Icon::class, 'icon_id');
     }
 }
