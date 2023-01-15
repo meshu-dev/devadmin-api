@@ -14,6 +14,10 @@ class SiteValidator extends ApiValidator
             'required',
             'exists:App\Models\Environment,id'
         ],
+        'icon_id' => [
+            'required',
+            'exists:App\Models\Icon,id'
+        ],
         'name' => [
             'required',
             'min:3',
