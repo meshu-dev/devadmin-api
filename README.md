@@ -20,6 +20,9 @@ cp .env.example .env
 ```
 vim .env
 ```
+
+## Add DB tables and data
+
 -  Run DB migrations
 ```
 php artisan migrate
@@ -28,6 +31,8 @@ php artisan migrate
 ```
 php artisan db:seed
 ```
+## Run dev version
+
 -  Run on local environment
 ```
 php artisan serve
