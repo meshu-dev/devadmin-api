@@ -32,14 +32,16 @@ class SiteValidator extends ApiValidator
 
     public function verifyAdd(array $params): ValidationException|bool
     {
-        $this->addUniqueRule();
+        // TODO - Repalce with unique check for site name and environment ID
+        //$this->addUniqueRule();
 
         return parent::verifyAdd($params);
     }
 
     public function verifyEdit(int $id, array $params): ValidationException|bool
     {
-        $this->addUniqueRule($id);
+        // TODO - Replace with unique check for site name and environment ID
+        //$this->addUniqueRule($id);
 
         return parent::verifyEdit($id, $params);
     }
