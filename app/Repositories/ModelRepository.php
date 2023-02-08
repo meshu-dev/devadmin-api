@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Interfaces\Repository;
@@ -67,7 +68,7 @@ abstract class ModelRepository implements Repository
     public function getAll(array $params = [])
     {
         $params = $this->model->verifySearchable($params);
-        
+
         if (isset($params['offset']) === true) {
             $offset = (int) $params['offset'];
             unset($params['offset']);
@@ -137,11 +138,11 @@ abstract class ModelRepository implements Repository
     public function getTotal(array $params = [])
     {
         $params = $this->model->verifySearchable($params);
-        
+
         if (isset($params['offset']) === true) {
             unset($params['offset']);
         }
-        
+
         if (isset($params['limit']) === true) {
             unset($params['limit']);
         }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +36,7 @@ class BaseModel extends Model
     {
         $array = parent::toArray();
         unset($array['id']);
-        
+
         return ['id' => $this->id] + $array;
     }
 }

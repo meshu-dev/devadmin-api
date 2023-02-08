@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -14,13 +15,14 @@ class EnvironmentController extends Controller
     public function __construct(
         protected EnvironmentRepository $environmentRepository,
         protected EnvironmentValidator $environmentValidator
-    ) { }
+    ) {
+    }
 
     public function add(Request $request)
     {
         $params = $request->all();
         $this->environmentValidator->verifyAdd($params);
-        
+
         $row = $this->environmentRepository->add($params);
 
         return $this->getResponse($row, 201);

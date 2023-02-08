@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class IconController extends Controller
     public function __construct(
         protected IconRepository $iconRepository,
         protected IconValidator $iconValidator
-    ) { }
+    ) {
+    }
 
     public function add(Request $request)
     {

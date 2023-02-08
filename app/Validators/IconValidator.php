@@ -1,7 +1,6 @@
 <?php
-namespace App\Validators;
 
-use App\Exceptions\ValidationException;
+namespace App\Validators;
 
 class IconValidator extends ApiValidator
 {

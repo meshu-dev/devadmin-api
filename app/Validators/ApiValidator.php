@@ -1,7 +1,7 @@
 <?php
+
 namespace App\Validators;
 
-use Illuminate\Support\Facades\Validator;
 use App\Exceptions\ValidationException;
 
 abstract class ApiValidator extends BaseValidator
@@ -18,7 +18,7 @@ abstract class ApiValidator extends BaseValidator
     {
         $params['id'] = $id;
         $rules = array_merge($this->existsRules, $this->rules);
-        
+
         return $this->checkRules($params, $rules);
     }
 

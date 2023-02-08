@@ -10,7 +10,8 @@ class AddAuthToken
 {
     public function __construct(
         protected AuthCookieService $authCookieService
-    ) { }
+    ) {
+    }
 
     public function handle(Request $request, Closure $next)
     {
@@ -23,7 +24,7 @@ class AddAuthToken
                 ]);
             }
         }
-        
+
         return $next($request);
     }
 }

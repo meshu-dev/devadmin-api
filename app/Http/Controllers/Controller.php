@@ -12,7 +12,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
 
     public function getResponse(
         $params,

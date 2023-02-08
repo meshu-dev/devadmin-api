@@ -86,13 +86,13 @@ class SiteTest extends TestCase
                 'data' => []
             ]);
     }
-    
+
     public function test_adding_site()
     {
         $this->setupAuth();
 
         $environment = $this->addEnvironment();
-        
+
         $name = 'Github';
         $url = 'https://github.com';
 
@@ -118,7 +118,7 @@ class SiteTest extends TestCase
     public function test_stop_adding_site_with_no_token()
     {
         $environment = $this->addEnvironment();
-        
+
         $name = 'Github';
         $url = 'https://github.com';
 
@@ -195,14 +195,14 @@ class SiteTest extends TestCase
     public function test_stop_deleting_site_with_no_token()
     {
         $site = $this->addSite();
-        
+
         $this->testUnauthorised('DELETE', "{$this->url}/{$site->id}");
     }
 
     public function test_stop_deleting_site_with_invalid_id()
     {
         $this->setupAuth();
-        
+
         $id = $this->getInvalidId();
 
         $this->json('DELETE', "{$this->url}/$id")

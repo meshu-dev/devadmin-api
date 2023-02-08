@@ -29,14 +29,14 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::group(['prefix' => 'auth'], function ($router) {
     Route::post('/login', [AuthController::class, 'login'])->name('login');
-    Route::post('/register', [AuthController::class, 'register']); 
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
-Route::middleware('auth:sanctum')->group( function ($router) {
+Route::middleware('auth:sanctum')->group(function ($router) {
     Route::group(['prefix' => 'auth'], function ($router) {
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::post('/refresh', [AuthController::class, 'refresh']);
-        Route::get('/user', [AuthController::class, 'userProfile']);    
+        Route::get('/user', [AuthController::class, 'userProfile']);
     });
 
     Route::group(['prefix' => 'environments'], function ($router) {
@@ -45,12 +45,12 @@ Route::middleware('auth:sanctum')->group( function ($router) {
         Route::get('/{id}/sites', [EnvironmentController::class, 'getSites']);
         Route::post('/', [EnvironmentController::class, 'add']);
         Route::put('/{id}', [EnvironmentController::class, 'edit']);
-        Route::delete('/{id}', [EnvironmentController::class, 'delete']);    
+        Route::delete('/{id}', [EnvironmentController::class, 'delete']);
     });
 
     Route::group(['prefix' => 'icons'], function ($router) {
         Route::get('/', [IconController::class, 'getAll']);
-        Route::get('/{id}', [IconController::class, 'get']);  
+        Route::get('/{id}', [IconController::class, 'get']);
     });
 
     Route::group(['prefix' => 'sites'], function ($router) {
@@ -58,6 +58,6 @@ Route::middleware('auth:sanctum')->group( function ($router) {
         Route::get('/{id}', [SiteController::class, 'get']);
         Route::post('/', [SiteController::class, 'add']);
         Route::put('/{id}', [SiteController::class, 'edit']);
-        Route::delete('/{id}', [SiteController::class, 'delete']);   
+        Route::delete('/{id}', [SiteController::class, 'delete']);
     });
 });
