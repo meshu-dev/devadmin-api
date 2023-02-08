@@ -31,7 +31,7 @@ class SiteValidator extends ApiValidator
         ]
     ];
 
-    public function verifyAdd(array $params): ValidationException|bool
+    public function verifyAdd(array $params): ValidationException | bool
     {
         // TODO - Repalce with unique check for site name and environment ID
         //$this->addUniqueRule();
@@ -39,7 +39,7 @@ class SiteValidator extends ApiValidator
         return parent::verifyAdd($params);
     }
 
-    public function verifyEdit(int $id, array $params): ValidationException|bool
+    public function verifyEdit(int $id, array $params): ValidationException | bool
     {
         // TODO - Replace with unique check for site name and environment ID
         //$this->addUniqueRule($id);

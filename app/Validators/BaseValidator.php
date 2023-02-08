@@ -8,7 +8,7 @@ use App\Exceptions\ValidationException;
 
 abstract class BaseValidator
 {
-    protected function checkRules($params, $rules): ValidationException|bool
+    protected function checkRules($params, $rules): ValidationException | bool
     {
         $validator = Validator::make($params, $rules);
 
