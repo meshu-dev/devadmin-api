@@ -37,3 +37,11 @@ php artisan db:seed
 ```
 php artisan serve
 ```
+
+## Run tests
+
+Use the following command to run unit tests
+
+```
+php artisan test
+```
