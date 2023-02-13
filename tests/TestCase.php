@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Sanctum\Sanctum;
 use App\Models\User;
 use App\Models\Environment;
+use App\Models\Icon;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -29,13 +30,21 @@ abstract class TestCase extends BaseTestCase
             ]);
     }
 
+    protected function getInvalidId()
+    {
+        return 9999;
+    }
+
     protected function addEnvironment()
     {
         return Environment::create(['name' => 'Production']);
     }
 
-    protected function getInvalidId()
+    protected function addIcon($params = [])
     {
-        return 9999;
+        return Icon::create([
+            'name' => $params['name'] ?? 'PHP',
+            'url' => $params['url'] ?? 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-plain.svg'
+        ]);
     }
 }

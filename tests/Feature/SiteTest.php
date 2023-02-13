@@ -92,12 +92,14 @@ class SiteTest extends TestCase
         $this->setupAuth();
 
         $environment = $this->addEnvironment();
+        $icon = $this->addIcon();
 
         $name = 'Github';
         $url = 'https://github.com';
 
         $params = [
             'environment_id' => $environment->id,
+            'icon_id' => $icon->id,
             'name' => $name,
             'url' => $url
         ];
@@ -118,12 +120,14 @@ class SiteTest extends TestCase
     public function test_stop_adding_site_with_no_token()
     {
         $environment = $this->addEnvironment();
+        $icon = $this->addIcon();
 
         $name = 'Github';
         $url = 'https://github.com';
 
         $params = [
             'environment_id' => $environment->id,
+            'icon_id' => $icon->id,
             'name' => $name,
             'url' => $url
         ];
@@ -135,15 +139,22 @@ class SiteTest extends TestCase
     {
         $this->setupAuth();
 
-        $env = Environment::create(['name' => 'Test']);
         $site = $this->addSite();
 
+        $env = Environment::create(['name' => 'Test']);
+        $icon = $this->addIcon([
+            'name' => 'React',
+            'url' => 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
+        ]);
+
         $envId = $env->id;
+        $iconId = $icon->id;
         $name = 'Bug Crowd';
         $url = 'https://www.bugcrowd.com';
 
         $params = [
             'environment_id' => $envId,
+            'icon_id' => $iconId,
             'name' => $name,
             'url' => $url
         ];
@@ -166,15 +177,21 @@ class SiteTest extends TestCase
 
     public function test_stop_editing_site_with_no_token()
     {
-        $env = Environment::create(['name' => 'Test']);
         $site = $this->addSite();
+        $env = Environment::create(['name' => 'Test']);
+        $icon = $this->addIcon([
+            'name' => 'React',
+            'url' => 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'
+        ]);
 
         $envId = $env->id;
+        $iconId = $icon->id;
         $name = 'Bug Crowd';
         $url = 'https://www.bugcrowd.com';
 
         $params = [
             'environment_id' => $envId,
+            'icon_id' => $iconId,
             'name' => $name,
             'url' => $url
         ];
@@ -212,9 +229,11 @@ class SiteTest extends TestCase
     protected function addSite()
     {
         $environment = $this->addEnvironment();
+        $icon = $this->addIcon();
 
         $site = Site::create([
             'environment_id' => $environment->id,
+            'icon_id' => $icon->id,
             'name' => 'Laravel',
             'url' => 'https://laravel.com'
         ]);
@@ -225,15 +244,18 @@ class SiteTest extends TestCase
     protected function addSites()
     {
         $environment = $this->addEnvironment();
+        $icon = $this->addIcon();
 
         Site::create([
             'environment_id' => $environment->id,
+            'icon_id' => $icon->id,
             'name' => 'Google',
             'url' => 'http://www.google.com'
         ]);
 
         Site::create([
             'environment_id' => $environment->id,
+            'icon_id' => $icon->id,
             'name' => 'Bing',
             'url' => 'http://www.bing.com'
         ]);

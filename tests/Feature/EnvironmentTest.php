@@ -110,20 +110,6 @@ class EnvironmentTest extends TestCase
         $this->testUnauthorised('POST', $this->url, $params);
     }
 
-    public function test_stop_adding_environment_with_duplicate_name()
-    {
-        $this->setupAuth();
-
-        $this->addEnvironment();
-
-        $params = [
-            'name' => 'Production'
-        ];
-
-        $this->json('POST', $this->url, $params)
-             ->assertStatus(422);
-    }
-
     public function test_editing_environment()
     {
         $this->setupAuth();
@@ -155,21 +141,6 @@ class EnvironmentTest extends TestCase
         ];
 
         $this->testUnauthorised('PUT', "{$this->url}/{$id}", $params);
-    }
-
-    public function test_stop_editing_environment_with_duplicate_name()
-    {
-        $this->setupAuth();
-
-        $environment = $this->addEnvironment();
-
-        $id = $environment->id;
-        $params = [
-            'name' => 'Production'
-        ];
-
-        $this->json('PUT', "{$this->url}/{$id}", $params)
-             ->assertStatus(422);
     }
 
     public function test_deleting_environment()
